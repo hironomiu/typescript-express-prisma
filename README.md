@@ -11,11 +11,11 @@ npm install -D typescript @types/node ts-node
 ### Packages
 
 ```
-npm install express
+npm install express cors
 ```
 
 ```
-npm install --save-dev @types/express
+npm install --save-dev @types/express @types/cors
 ```
 
 ### nodemon

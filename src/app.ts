@@ -9,6 +9,7 @@ export const setUp = () => {
   // CORS
   app.use(
     cors({
+      // TODO: .envに出す
       origin: [
         'http://localhost:3000',
         'http://localhost:3001',

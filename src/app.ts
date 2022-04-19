@@ -1,18 +1,19 @@
 import express, { Request, Response } from 'express'
-import { PrismaClient } from '@prisma/client'
-
+import users from './api/v1/users'
 export const setUp = () => {
   const app = express()
-  const prisma = new PrismaClient()
 
-  const main = async () => {
-    const allUsers = await prisma.users.findMany()
-    console.log(allUsers)
-  }
   app.get('/', async (req: Request, res: Response) => {
-    main()
     res.json('hello world')
   })
 
+  app.use(
+    '/api/v1',
+    (() => {
+      const router = express.Router()
+      router.use('/users', users)
+      return router
+    })()
+  )
   return app
 }

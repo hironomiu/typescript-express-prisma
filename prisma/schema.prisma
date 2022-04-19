@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model boards {
+  id      Int     @id @default(autoincrement()) @db.UnsignedInt
+  user_id Int     @db.UnsignedInt
+  title   String? @db.VarChar(100)
+  users   users   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boards_fk_1")
+  todos   todos[]
+
+  @@index([user_id], map: "boards_fk_1")
+}
+
+model todos {
+  id       Int    @id @default(autoincrement()) @db.UnsignedInt
+  user_id  Int    @db.UnsignedInt
+  title    String @db.VarChar(100)
+  body     String @db.Text
+  board_id Int    @db.UnsignedInt
+  order_id Int    @db.UnsignedInt
+  boards   boards @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "todos_fk_1")
+  users    users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "todos_fk_2")
+
+  @@unique([board_id, order_id], map: "board_id")
+  @@index([user_id], map: "todos_fk_2")
+}
+
+model users {
+  id     Int      @id @default(autoincrement()) @db.UnsignedInt
+  boards boards[]
+  todos  todos[]
+}

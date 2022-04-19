@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express'
 import users from './api/v1/users'
+import boards from './api/v1/boards'
 import todos from './api/v1/todos'
 export const setUp = () => {
   const app = express()
@@ -13,6 +14,7 @@ export const setUp = () => {
     (() => {
       const router = express.Router()
       router.use('/users', users)
+      router.use('/boards', boards)
       router.use('/todos', todos)
       return router
     })()

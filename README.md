@@ -63,21 +63,22 @@ npx prisma generate
 ```
 create database dnd;
 
-drop table boards;
 drop table todos;
+drop table boards;
 drop table users;
 
 create table users(
   id int unsigned not null auto_increment,
   nickname varchar(100) not null,
   email varchar(100) not null,
+  password varchar(100) not null,
   primary key (id),
   unique key(email)
 );
 
-insert into users(nickname,email) values
-('太郎','taro@example.com'),
-('花子','hanako@example.com');
+insert into users(nickname,email,password) values
+('太郎','taro@example.com','xxxxx'),
+('花子','hanako@example.com','xxxxx');
 
 create table boards(
   id int unsigned not null auto_increment,

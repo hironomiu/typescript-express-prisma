@@ -32,7 +32,9 @@ model todos {
 }
 
 model users {
-  id     Int      @id @default(autoincrement()) @db.UnsignedInt
-  boards boards[]
-  todos  todos[]
+  id       Int      @id @default(autoincrement()) @db.UnsignedInt
+  nickname String   @db.VarChar(100)
+  email    String   @unique(map: "email") @db.VarChar(100)
+  boards   boards[]
+  todos    todos[]
 }

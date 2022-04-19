@@ -47,3 +47,8 @@ npx tsc --init
 [公式:Relational databases(MySQL)](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases-typescript-mysql)
 
 [公式:Install Prisma Client](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases/install-prisma-client-typescript-mysql)
+
+```
+npx prisma db pull
+npx prisma generate
+```

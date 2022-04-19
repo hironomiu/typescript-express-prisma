@@ -18,6 +18,8 @@ export const setUp = () => {
       optionsSuccessStatus: 200,
     })
   )
+
+  // TODO: ダミーで受付（将来的にはAPIのみで良いので不要になったら消す）
   app.get('/', async (req: Request, res: Response) => {
     res.json('hello world')
   })

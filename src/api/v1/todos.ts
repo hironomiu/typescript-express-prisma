@@ -15,13 +15,19 @@ todos.route('/').get(async (req, res) => {
 })
 
 todos.route('/').put(async (req, res) => {
-  // TODO: 更新処理の実装（一旦user_idは固定で更新する）
-  // const todos = await prisma.todos.findMany({
-  //   where: {
-  //     user_id: 1,
-  //   },
-  // })
-  console.log('update')
+  // TODO: 更新処理の実装（一旦user_idの確認はせずに更新する）
+  const updateTodo = await prisma.todos.update({
+    where: {
+      id: req.body.id,
+    },
+    data: {
+      title: req.body.title,
+      body: req.body.body,
+      board_id: req.body.boardId,
+      order_id: req.body.orderId,
+    },
+  })
+  console.log('update:', req.body)
   res.json({ isSuccess: true, message: 'put success' })
 })
 

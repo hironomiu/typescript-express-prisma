@@ -6,6 +6,9 @@ import todos from './api/v1/todos'
 export const setUp = () => {
   const app = express()
 
+  // request.bodyを受ける際に必要
+  app.use(express.json())
+
   // CORS
   app.use(
     cors({

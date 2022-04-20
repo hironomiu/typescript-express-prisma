@@ -3,6 +3,7 @@ import cors from 'cors'
 import users from './api/v1/users'
 import boards from './api/v1/boards'
 import todos from './api/v1/todos'
+import auth from './api/v1/auth'
 export const setUp = () => {
   const app = express()
 
@@ -36,6 +37,7 @@ export const setUp = () => {
       router.use('/users', users)
       router.use('/boards', boards)
       router.use('/todos', todos)
+      router.use('/auth', auth)
       return router
     })()
   )

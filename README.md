@@ -3,6 +3,15 @@
 [
 typescript-react-html-drag-and-drop](https://github.com/hironomiu/typescript-react-html-drag-and-drop) のサーバサイド
 
+## SetUp
+
+### .env
+
+| 変数名         | 設定値                           |
+| :------------- | :------------------------------- |
+| DATABASE_URL   | prisma で利用する DB の設定      |
+| SESSION_SECRET | セッション用のシークレット文字列 |
+
 ## Install Memo
 
 ### TypeScript
@@ -14,11 +23,19 @@ npm install -D typescript @types/node ts-node
 ### Packages
 
 ```
-npm install express cors
+npm install express cors cookie-parser csurf express-session bcrypt
 ```
 
 ```
-npm install --save-dev @types/express @types/cors
+npm install --save-dev @types/express @types/cors @types/cookie-parser @types/csurf @types/express-session @types/bcrypt
+```
+
+### passport
+
+```
+npm install passport passport-local
+
+npm install -D @types/passport @types/passport-local
 ```
 
 ### nodemon

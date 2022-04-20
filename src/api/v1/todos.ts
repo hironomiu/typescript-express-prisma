@@ -14,6 +14,35 @@ todos.route('/').get(async (req, res) => {
   res.json(todos)
 })
 
+todos.route('/').post(async (req, res) => {
+  console.log('post:', req.body)
+  const maxOrderId = await prisma.todos.aggregate({
+    where: {
+      user_id: 1,
+      board_id: req.body.boardId,
+    },
+    _max: {
+      order_id: true,
+    },
+  })
+
+  console.log(maxOrderId._max.order_id)
+
+  const orderId = Number(maxOrderId._max.order_id) + 1
+  const insertTodo = await prisma.todos.create({
+    data: {
+      title: req.body.title,
+      body: req.body.body,
+      user_id: 1,
+      board_id: req.body.boardId,
+      order_id: orderId,
+    },
+  })
+
+  console.log(insertTodo)
+  res.json({ isSuccess: true, message: 'post success', data: insertTodo })
+})
+
 todos.route('/').put(async (req, res) => {
   // TODO: 更新処理の実装（一旦user_idの確認はせずに更新する）
   const updateTodo = await prisma.todos.update({

@@ -7,11 +7,33 @@ import boards from './api/v1/boards'
 import todos from './api/v1/todos'
 import auth from './api/v1/auth'
 import csrfToken from './api/v1/csrfToken'
+import * as expressSession from 'express-session'
+import expressMySqlSession from 'express-mysql-session'
 import session from 'express-session'
 import authPassport, { checkAuthentication } from './authPassport'
+import mysql2 from 'mysql2/promise'
 
 const SESSION_SECRET = process.env.SESSION_SECRET || 'yoursecretkeyword'
 const PRODUCTION_MODE = process.env.PRODUCTION_MODE || 'dev'
+const DB_DATABASE = process.env.DB_DATABASE || 'dnd'
+const DB_HOST = process.env.DB_HOST || '127.0.0.1'
+const DB_PASSWORD = process.env.DB_PASSWORD || 'mysql'
+const DB_PORT = process.env.DB_PORT || '3306'
+const DB_USER = process.env.DB_USER || 'root'
+
+const options = {
+  host: '127.0.0.1',
+  port: 3306,
+  user: 'root',
+  password: 'mysql',
+  database: 'dnd',
+}
+
+// expressMySqlSessionを利用する際にcaching_sha2_passwordで怒られないようmysql2をラップする
+const connection = mysql2.createPool(options)
+const MySQLStore = expressMySqlSession(expressSession)
+
+export const sessionStore = new MySQLStore({}, connection)
 
 export const setUp = () => {
   const app = express()
@@ -41,6 +63,7 @@ export const setUp = () => {
   app.set('trust proxy', 1)
   // dev or production
   const isProduction = PRODUCTION_MODE === 'dev' ? false : true
+
   app.use(
     session({
       name: 'session',
@@ -48,10 +71,10 @@ export const setUp = () => {
       resave: false,
       saveUninitialized: false,
       // TODO: sessionの格納先をMySQLに設定
-      // store: sessionStore,
+      store: sessionStore,
       // localhostではなくhttpsが使える環境の場合はPRODUCTION_MODEを変更しtrueで運用する
       // cookie: { secure: isProduction },
-      cookie: { secure: false },
+      cookie: { maxAge: 5 * 1000, secure: false },
     })
   )
 

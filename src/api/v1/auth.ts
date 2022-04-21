@@ -38,7 +38,7 @@ auth.post('/signin', (req: Request, res: Response, next: NextFunction) => {
     req.session.nickname = user.nickname
     req.session.email = user.email
     res.json(user)
-    // console.log(req.session)
+    console.log('post signin:', req.session)
     return next()
   })(req, res, next)
 })

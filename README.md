@@ -107,8 +107,8 @@ create table users(
 );
 
 insert into users(nickname,email,password) values
-('太郎','taro@example.com','xxxxx'),
-('花子','hanako@example.com','xxxxx');
+('太郎','taro@example.com','$2b$10$wFi8RBzI3EpHt6XxqxLdLO41437B8RniV6ytM6NAACNPdFbjPj3je'),
+('花子','hanako@example.com','$2b$10$OaDQnNzHPyS4RKihI3loxuCQPogfuBz5/WYDEtvBpV0B2FTR4l0MW');
 
 create table boards(
   id int unsigned not null auto_increment,

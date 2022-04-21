@@ -50,7 +50,8 @@ export const setUp = () => {
       // TODO: sessionの格納先をMySQLに設定
       // store: sessionStore,
       // localhostではなくhttpsが使える環境の場合はPRODUCTION_MODEを変更しtrueで運用する
-      cookie: { secure: isProduction },
+      // cookie: { secure: isProduction },
+      cookie: { secure: false },
     })
   )
 

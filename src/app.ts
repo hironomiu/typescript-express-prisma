@@ -1,9 +1,12 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
+import csrf from 'csurf'
 import users from './api/v1/users'
 import boards from './api/v1/boards'
 import todos from './api/v1/todos'
 import auth from './api/v1/auth'
+import csrfToken from './api/v1/csrfToken'
 import session from 'express-session'
 import authPassport, { checkAuthentication } from './authPassport'
 
@@ -31,6 +34,9 @@ export const setUp = () => {
     })
   )
 
+  // クライアント側のCSRF、SESSION で利用
+  app.use(cookieParser())
+
   // trust first proxy
   app.set('trust proxy', 1)
   // dev or production
@@ -45,6 +51,18 @@ export const setUp = () => {
       // store: sessionStore,
       // localhostではなくhttpsが使える環境の場合はPRODUCTION_MODEを変更しtrueで運用する
       cookie: { secure: isProduction },
+    })
+  )
+
+  // CSRF sessionの設定後に設定する(先に設定すると'Error: misconfigured csrf'で怒られる)
+  app.use(
+    csrf({
+      cookie: {
+        httpOnly: true,
+        secure: true,
+        path: '/',
+        sameSite: 'none',
+      },
     })
   )
 
@@ -64,6 +82,7 @@ export const setUp = () => {
       router.use('/users', users)
       router.use('/boards', boards)
       router.use('/todos', todos)
+      router.use('/csrf-token', csrfToken)
       router.use('/auth', auth)
       return router
     })()

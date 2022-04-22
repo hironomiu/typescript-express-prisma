@@ -70,7 +70,8 @@ export const setUp = () => {
       secret: SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
-      store: sessionStore,
+      // TODO: mysql2 sessionStoreを使うとsessionが安定しない
+      // store: sessionStore,
       // localhostではなくhttpsが使える環境の場合はPRODUCTION_MODEを変更しtrueで運用する
       // cookie: { secure: isProduction },
       cookie: { secure: false },

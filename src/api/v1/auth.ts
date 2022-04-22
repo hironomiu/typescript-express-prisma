@@ -32,7 +32,7 @@ auth.post('/signin', (req: Request, res: Response, next: NextFunction) => {
     req.session.regenerate((err) => {
       if (err) console.log('err:', err)
     })
-    console.log(user)
+    console.log('signin!!:', user)
     // TODO ログイン後の状態を持つのに妥当か確認
     req.session.userId = user.id
     req.session.nickname = user.nickname

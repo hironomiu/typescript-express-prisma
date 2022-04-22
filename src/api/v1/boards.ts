@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 
 boards.route('/').get(async (req, res) => {
   // TODO: ログインの状態確認はミドルウェアに入れらる？
-  console.log('session:', req.session)
+  console.log('board session:', req.session)
   if (!req.session.userId) {
     res.json({
       isSuccess: false,
@@ -19,7 +19,8 @@ boards.route('/').get(async (req, res) => {
         user_id: 1,
       },
     })
-    res.json(boards)
+    // TODO: isSuccess: true, message: 'success', を追加
+    res.json({ isSuccess: true, message: 'success', boards: boards })
   }
 })
 

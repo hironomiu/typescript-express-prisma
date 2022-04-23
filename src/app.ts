@@ -20,6 +20,7 @@ const DB_HOST = process.env.DB_HOST || '127.0.0.1'
 const DB_PASSWORD = process.env.DB_PASSWORD || 'mysql'
 const DB_PORT = process.env.DB_PORT || '3306'
 const DB_USER = process.env.DB_USER || 'root'
+const CORS_URLS = process.env.CORS_URLS?.split(' ') || ['http://localhost:3000']
 
 const options = {
   host: '127.0.0.1',
@@ -44,13 +45,7 @@ export const setUp = () => {
   // CORS
   app.use(
     cors({
-      // TODO: .envに出す
-      origin: [
-        'http://localhost:3000',
-        'http://localhost:3001',
-        'http://localhost:3002',
-        'http://localhost:3003',
-      ],
+      origin: CORS_URLS,
       credentials: true,
       optionsSuccessStatus: 200,
     })

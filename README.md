@@ -7,10 +7,17 @@ typescript-react-html-drag-and-drop](https://github.com/hironomiu/typescript-rea
 
 ### .env
 
-| 変数名         | 設定値                           |
-| :------------- | :------------------------------- |
-| DATABASE_URL   | prisma で利用する DB の設定      |
-| SESSION_SECRET | セッション用のシークレット文字列 |
+| 変数名          | 設定値                                      |
+| :-------------- | :------------------------------------------ |
+| PRODUCTION_MODE | dev or prod                                 |
+| DATABASE_URL    | prisma で利用する DB の設定                 |
+| SESSION_SECRET  | セッション用のシークレット文字列            |
+| CORS_URLS       | CORS 許可ドメイン（スペース区切りで複数可） |
+| DB_DATABASE     | SESSION STORE 用                            |
+| DB_HOST         | SESSION STORE 用                            |
+| DB_PASSWORD     | SESSION STORE 用                            |
+| DB_PORT         | SESSION STORE 用                            |
+| DB_USER         | SESSION STORE 用                            |
 
 ## Install Memo
 

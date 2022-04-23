@@ -93,6 +93,12 @@ npx prisma migrate dev --create-only --name initdb
 npx prisma migrate dev
 ```
 
+### Jest & Supertest
+
+```
+npm install -D jest ts-jest @types/jest supertest @types/supertest
+```
+
 ## Data Structure Memo
 
 サーバサイド側を実装する際のデータ構造についてのメモ(users はユーザ単位で管理するためにとりあえず作成)

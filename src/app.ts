@@ -31,10 +31,10 @@ const options = {
 }
 
 // expressMySqlSessionを利用する際にcaching_sha2_passwordで怒られないようmysql2をラップする
-const connection = mysql2.createPool(options)
-const MySQLStore = expressMySqlSession(expressSession)
+// const connection = mysql2.createPool(options)
+// const MySQLStore = expressMySqlSession(expressSession)
 
-export const sessionStore = new MySQLStore({}, connection)
+// export const sessionStore = new MySQLStore({}, connection)
 
 export const setUp = () => {
   const app = express()

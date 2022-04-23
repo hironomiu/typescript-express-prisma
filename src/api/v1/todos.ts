@@ -75,4 +75,8 @@ todos.route('/').put(async (req, res) => {
   }
 })
 
+// TODO: エンドポイント名
+todos.route('/all').post(async (req, res) => {
+  console.log(req.body)
+})
 export default todos

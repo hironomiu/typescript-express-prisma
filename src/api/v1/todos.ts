@@ -87,6 +87,28 @@ todos.route('/').put(async (req: TodoRequest, res) => {
 
 // TODO: エンドポイント名
 todos.route('/all').post(async (req, res) => {
-  console.log(req.body)
+  req.body.map(async (data: any) => {
+    // const todo = await prisma.todos.findUnique({
+    //   where: {
+    //     id: data.id,
+    //   },
+    // })
+    // TODO: user_idはsessionを使い事前にチェックする
+    const updateTodo = await prisma.todos.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        title: data.title,
+        body: data.body,
+        user_id: data.userId,
+        board_id: data.boardId,
+        order_id: data.orderId,
+      },
+    })
+    // console.log('todo:', todo)
+  })
+  // TODO: 処理判定後にレスポンスする
+  res.json({ isSuccess: true, message: 'all update success' })
 })
 export default todos

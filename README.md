@@ -65,6 +65,8 @@ npm install --save-dev nodemon
 
 ### TypeScript Initialize
 
+`tsconfig.json`は[公式;Node Target Mapping](https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping)を参考
+
 ```
 npx tsc --init
 ```

@@ -1,6 +1,5 @@
-import { Router } from 'express'
+import { Router, Request } from 'express'
 import { PrismaClient } from '@prisma/client'
-import { userInfo } from 'os'
 
 const todos = Router()
 const prisma = new PrismaClient()
@@ -19,7 +18,18 @@ todos.route('/').get(async (req, res) => {
   }
 })
 
-todos.route('/').post(async (req, res) => {
+interface TodoRequest extends Request {
+  body: {
+    id: number
+    title: string
+    body: string
+    boardId: number
+    orderId: number
+    csrfToken: string
+  }
+}
+
+todos.route('/').post(async (req: TodoRequest, res) => {
   console.log('post:', req.body)
   // TODO: ミドルウェア化
   if (!req.session.userId) {
@@ -53,7 +63,7 @@ todos.route('/').post(async (req, res) => {
   }
 })
 
-todos.route('/').put(async (req, res) => {
+todos.route('/').put(async (req: TodoRequest, res) => {
   // TODO: ミドルウェア化
   if (!req.session.userId) {
     res.json({ isSuccess: false, message: 'access error' })

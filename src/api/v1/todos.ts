@@ -87,8 +87,10 @@ todos.route('/').put(async (req: TodoRequest, res) => {
 })
 
 // TODO: エンドポイント名
+// TODO: 途中でこけた場合にデータの復旧（board_id,order_idのソート）が必要
 todos.route('/all').post(async (req, res) => {
   // MEMO: unique制約回避
+  // TODO: unique対策をもう少し考える
   req.body.map(async (data: any, index: number) => {
     // TODO: user_idはsessionを使い事前にチェックする
     console.log(data)

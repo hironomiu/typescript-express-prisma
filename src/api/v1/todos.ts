@@ -13,6 +13,7 @@ todos.route('/').get(async (req, res) => {
       where: {
         user_id: Number(req.session.userId),
       },
+      orderBy: [{ board_id: 'asc' }, { order_id: 'asc' }],
     })
     res.json(todos)
   }
@@ -87,12 +88,25 @@ todos.route('/').put(async (req: TodoRequest, res) => {
 
 // TODO: エンドポイント名
 todos.route('/all').post(async (req, res) => {
+  // MEMO: unique制約回避
+  req.body.map(async (data: any, index: number) => {
+    // TODO: user_idはsessionを使い事前にチェックする
+    console.log(data)
+    const updateTodo = await prisma.todos.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        title: data.title,
+        body: data.body,
+        user_id: data.userId,
+        board_id: data.board_id,
+        order_id: 1000 - index,
+      },
+    })
+  })
+
   req.body.map(async (data: any) => {
-    // const todo = await prisma.todos.findUnique({
-    //   where: {
-    //     id: data.id,
-    //   },
-    // })
     // TODO: user_idはsessionを使い事前にチェックする
     const updateTodo = await prisma.todos.update({
       where: {
@@ -106,7 +120,6 @@ todos.route('/all').post(async (req, res) => {
         order_id: data.orderId,
       },
     })
-    // console.log('todo:', todo)
   })
   // TODO: 処理判定後にレスポンスする
   res.json({ isSuccess: true, message: 'all update success' })

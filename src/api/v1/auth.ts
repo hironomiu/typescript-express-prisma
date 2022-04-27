@@ -32,12 +32,11 @@ auth.post('/signin', (req: Request, res: Response, next: NextFunction) => {
     req.session.regenerate((err) => {
       if (err) console.log('err:', err)
     })
-    console.log('signin!!:', user)
-    // TODO ログイン後の状態を持つのに妥当か確認
     req.session.userId = user.id
     req.session.nickname = user.nickname
     req.session.email = user.email
-    res.json(user)
+    // TODO: userを設定しているところを探しmessageも埋め込む
+    res.json({ ...user, message: 'signin success' })
     console.log('post signin:', req.session)
     return next()
   })(req, res, next)

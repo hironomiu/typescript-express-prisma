@@ -19,6 +19,14 @@ todos.route('/').get(async (req, res) => {
   }
 })
 
+type Todo = {
+  id: number
+  title: string
+  body: string
+  userId: number
+  boardId: number
+  orderId: number
+}
 interface TodoRequest extends Request {
   body: {
     id: number
@@ -91,9 +99,10 @@ todos.route('/').put(async (req: TodoRequest, res) => {
 todos.route('/all').post(async (req, res) => {
   // MEMO: unique制約回避
   // TODO: unique対策をもう少し考える
-  req.body.map(async (data: any, index: number) => {
+  req.body.map(async (data: Todo, index: number) => {
     // TODO: user_idはsessionを使い事前にチェックする
-    console.log(data)
+    console.log('all:', data)
+    console.log('session user_id:', req.session.userId)
     const updateTodo = await prisma.todos.update({
       where: {
         id: data.id,
@@ -101,8 +110,8 @@ todos.route('/all').post(async (req, res) => {
       data: {
         title: data.title,
         body: data.body,
-        user_id: data.userId,
-        board_id: data.board_id,
+        // user_id: data.userId,
+        board_id: data.boardId,
         order_id: 1000 - index,
       },
     })
@@ -117,7 +126,7 @@ todos.route('/all').post(async (req, res) => {
       data: {
         title: data.title,
         body: data.body,
-        user_id: data.userId,
+        // user_id: data.userId,
         board_id: data.boardId,
         order_id: data.orderId,
       },

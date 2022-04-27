@@ -33,8 +33,7 @@ describe('auth', () => {
     const obj = JSON.parse(response.text)
     expect(response.status).toBe(200)
     expect(obj.isSuccess).toBe(true)
-
-    console.log(obj)
+    expect(obj.message).toBe('signin success')
   })
   it('test', async () => {
     const response = await supertest(app).get('/api/v1/users')

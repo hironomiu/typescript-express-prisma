@@ -7,7 +7,15 @@ const prisma = new PrismaClient()
 
 // SignIn状態の確認
 auth.get('/signin', checkAuthentication, (req, res) => {
-  res.json({ isSuccess: true, message: 'success' })
+  console.log(req.session)
+  // TODO responseで渡す`id` or `userId`について検討
+  res.json({
+    isSuccess: true,
+    id: req.session.userId,
+    nickname: req.session.nickname,
+    email: req.session.email,
+    message: 'success',
+  })
 })
 
 // req.session.xxx用の型定義
@@ -35,7 +43,7 @@ auth.post('/signin', (req: Request, res: Response, next: NextFunction) => {
     req.session.userId = user.id
     req.session.nickname = user.nickname
     req.session.email = user.email
-    // TODO: userを設定しているところを探しmessageも埋め込む
+    // TODO responseで渡す`id` or `userId`について検討
     res.json({ ...user, message: 'signin success' })
     console.log('post signin:', req.session)
     return next()

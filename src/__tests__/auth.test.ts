@@ -35,9 +35,4 @@ describe('auth', () => {
     expect(obj.isSuccess).toBe(true)
     expect(obj.message).toBe('signin success')
   })
-  it('test', async () => {
-    const response = await supertest(app).get('/api/v1/users')
-    const data = JSON.parse(response.text)
-    expect(data[0].id).toBe(1)
-  })
 })

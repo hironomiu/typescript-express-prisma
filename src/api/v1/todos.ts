@@ -1,6 +1,7 @@
 import { Router, Request } from 'express'
 import { PrismaClient } from '@prisma/client'
 import { isAuthenticated } from '../../middlewares/isAuthenticated'
+
 const todos = Router()
 const prisma = new PrismaClient()
 

@@ -30,11 +30,11 @@ npm install -D typescript @types/node ts-node
 ### Packages
 
 ```
-npm install express cors cookie-parser csurf express-session bcrypt express-mysql-session mysql2
+npm install express cors cookie-parser csurf express-session bcrypt express-mysql-session mysql2 express-validator morgan
 ```
 
 ```
-npm install --save-dev @types/express @types/cors @types/cookie-parser @types/csurf @types/express-session @types/bcrypt @types/express-mysql-session types/mysql2#
+npm install --save-dev @types/express @types/cors @types/cookie-parser @types/csurf @types/express-session @types/bcrypt @types/express-mysql-session types/mysql2# @types/express-validator @types/morgan
 ```
 
 ### passport

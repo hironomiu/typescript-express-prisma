@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express'
 import { PrismaClient } from '@prisma/client'
 import { checkAuthentication } from '../../authPassport'
 import passport from 'passport'
+import { checkEmailIsEmpty, validator } from '../../middlewares/validator'
 const auth = Router()
 const prisma = new PrismaClient()
 
@@ -28,27 +29,32 @@ declare module 'express-session' {
 }
 
 // SignIn
-auth.post('/signin', (req: Request, res: Response, next: NextFunction) => {
-  console.log('signin:', req.body)
-  passport.authenticate('local', { session: true }, (err, user, info) => {
-    if (err) return next(err)
-    // infoではなく別途メッセージをレスポンス
-    if (!user)
-      return res.status(400).json({ isSuccess: false, message: '認証エラー' })
-    // ログイン後のセッションの再作成
-    // TODO コールバック内の正常系の処理
-    req.session.regenerate((err) => {
-      if (err) console.log('err:', err)
-    })
-    req.session.userId = user.id
-    req.session.nickname = user.nickname
-    req.session.email = user.email
-    // TODO responseで渡す`id` or `userId`について検討
-    res.json({ ...user, message: 'signin success' })
-    console.log('post signin:', req.session)
-    return next()
-  })(req, res, next)
-})
+auth.post(
+  '/signin',
+  [checkEmailIsEmpty],
+  validator,
+  (req: Request, res: Response, next: NextFunction) => {
+    console.log('signin:', req.body)
+    passport.authenticate('local', { session: true }, (err, user, info) => {
+      if (err) return next(err)
+      // infoではなく別途メッセージをレスポンス
+      if (!user)
+        return res.status(400).json({ isSuccess: false, message: '認証エラー' })
+      // ログイン後のセッションの再作成
+      // TODO コールバック内の正常系の処理
+      req.session.regenerate((err) => {
+        if (err) console.log('err:', err)
+      })
+      req.session.userId = user.id
+      req.session.nickname = user.nickname
+      req.session.email = user.email
+      // TODO responseで渡す`id` or `userId`について検討
+      res.json({ ...user, message: 'signin success' })
+      console.log('post signin:', req.session)
+      return next()
+    })(req, res, next)
+  }
+)
 
 // SignOut
 // TODO: 型

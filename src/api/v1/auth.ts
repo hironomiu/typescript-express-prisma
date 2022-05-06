@@ -34,7 +34,6 @@ auth.post(
   [checkEmailIsEmpty],
   validator,
   (req: Request, res: Response, next: NextFunction) => {
-    console.log('signin:', req.body)
     passport.authenticate('local', { session: true }, (err, user, info) => {
       if (err) return next(err)
       // infoではなく別途メッセージをレスポンス

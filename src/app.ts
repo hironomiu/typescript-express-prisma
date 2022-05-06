@@ -22,19 +22,24 @@ const DB_PORT = process.env.DB_PORT || '3306'
 const DB_USER = process.env.DB_USER || 'root'
 const CORS_URLS = process.env.CORS_URLS?.split(' ') || ['http://localhost:3000']
 
+// TODO: オプションの設定をdotenvから取る
 const options = {
   host: '127.0.0.1',
   port: 3306,
   user: 'root',
   password: 'mysql',
   database: 'dnd',
+  // MEMO: 対策 -> mysql2 sessionStoreを使うとsessionが安定しない
+  connectTimeout: 0,
+  waitForConnections: true,
 }
 
 // expressMySqlSessionを利用する際にcaching_sha2_passwordで怒られないようmysql2をラップする
-// const connection = mysql2.createPool(options)
-// const MySQLStore = expressMySqlSession(expressSession)
+const connection = mysql2.createPool(options)
+// const connection = mysql2.createConnection(options)
+const MySQLStore = expressMySqlSession(expressSession)
 
-// export const sessionStore = new MySQLStore({}, connection)
+export const sessionStore = new MySQLStore({}, connection)
 
 export const setUp = () => {
   const app = express()
@@ -66,7 +71,7 @@ export const setUp = () => {
       resave: false,
       saveUninitialized: false,
       // TODO: mysql2 sessionStoreを使うとsessionが安定しない
-      // store: sessionStore,
+      store: sessionStore,
       // localhostではなくhttpsが使える環境の場合はPRODUCTION_MODEを変更しtrueで運用する
       // cookie: { secure: isProduction },
       cookie: { secure: false },

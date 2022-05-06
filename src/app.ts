@@ -18,17 +18,16 @@ const PRODUCTION_MODE = process.env.PRODUCTION_MODE || 'dev'
 const DB_DATABASE = process.env.DB_DATABASE || 'dnd'
 const DB_HOST = process.env.DB_HOST || '127.0.0.1'
 const DB_PASSWORD = process.env.DB_PASSWORD || 'mysql'
-const DB_PORT = process.env.DB_PORT || '3306'
+const DB_PORT = Number(process.env.DB_PORT) || 3306
 const DB_USER = process.env.DB_USER || 'root'
 const CORS_URLS = process.env.CORS_URLS?.split(' ') || ['http://localhost:3000']
 
-// TODO: オプションの設定をdotenvから取る
 const options = {
-  host: '127.0.0.1',
-  port: 3306,
-  user: 'root',
-  password: 'mysql',
-  database: 'dnd',
+  host: DB_HOST,
+  port: DB_PORT,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_DATABASE,
   // MEMO: 対策 -> mysql2 sessionStoreを使うとsessionが安定しない
   connectTimeout: 0,
   waitForConnections: true,
@@ -73,8 +72,8 @@ export const setUp = () => {
       // TODO: mysql2 sessionStoreを使うとsessionが安定しない
       store: sessionStore,
       // localhostではなくhttpsが使える環境の場合はPRODUCTION_MODEを変更しtrueで運用する
-      // cookie: { secure: isProduction },
-      cookie: { secure: false },
+      cookie: { secure: isProduction },
+      // cookie: { secure: false },
     })
   )
 

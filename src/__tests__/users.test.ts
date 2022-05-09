@@ -1,9 +1,10 @@
 import supertest from 'supertest'
 import { Express } from 'express'
-import { setUp } from '../app'
+import { setUp, sessionStore } from '../app'
 
 let app: Express = setUp()
 
+afterAll(() => sessionStore.close())
 // TODO: usersの実装にあわせて修正
 describe('users', () => {
   it('test', async () => {

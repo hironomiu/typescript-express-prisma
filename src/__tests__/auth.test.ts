@@ -1,6 +1,6 @@
 import supertest from 'supertest'
 import { Express } from 'express'
-import { setUp } from '../app'
+import { setUp, sessionStore } from '../app'
 
 let app: Express = setUp()
 let csrfToken = ''
@@ -15,7 +15,10 @@ beforeEach(async () => {
   cookie = text[0]
 })
 
-afterAll(() => {})
+afterAll(() => {
+  sessionStore.clear()
+  sessionStore.close()
+})
 
 describe('auth', () => {
   it('POST /signin', async () => {

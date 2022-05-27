@@ -5,6 +5,12 @@ typescript-react-html-drag-and-drop](https://github.com/hironomiu/typescript-rea
 
 ## SetUp
 
+```
+npm install
+npx prisma db pull
+npx prisma generate
+```
+
 ### .env
 
 | 変数名          | 設定値                                      |
@@ -18,6 +24,12 @@ typescript-react-html-drag-and-drop](https://github.com/hironomiu/typescript-rea
 | DB_PASSWORD     | SESSION STORE 用                            |
 | DB_PORT         | SESSION STORE 用                            |
 | DB_USER         | SESSION STORE 用                            |
+
+## Run
+
+```
+
+```
 
 ## Install Memo
 
